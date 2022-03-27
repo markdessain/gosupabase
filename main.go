@@ -15,6 +15,7 @@ import (
 // TODO: Add channel to feedback the errors that are happening
 // TODO: It currently uses both the commit timestamp and the created at column which is inconsistent
 
+
 type Realtime struct {
 	ApiKey string
 	ProjectCode string
