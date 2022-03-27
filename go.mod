@@ -1,4 +1,4 @@
-module gosupabase
+module github.com/markdessain/gosupabase
 
 go 1.17
 
