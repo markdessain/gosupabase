@@ -26,6 +26,8 @@ type Realtime struct {
 	Connection *websocket.Conn
 	Timestamp *time.Time
 	Errors []error
+
+	Finished bool
 }
 
 type RealTimeAction interface {
@@ -41,6 +43,7 @@ func NewRealtime(apiKey, projectCode, schema, table string) Realtime {
 		nil,
 		nil,
 		[]error{},
+		false,
 	}
 }
 
@@ -57,6 +60,10 @@ func (w *Realtime) Start(lastTimestamp *time.Time, f RealTimeAction) {
 
 	log.Println("Staring Streaming ...")
 	for {
+		if w.Finished {
+			return
+		}
+
 		w.run(f)
 
 		// Reconnect
@@ -165,4 +172,5 @@ func (w *Realtime) run(f RealTimeAction) {
 func (w *Realtime) Stop() {
 	log.Println("Stopping Stream")
 	w.Connection.Close()
+	w.Finished = true
 }
