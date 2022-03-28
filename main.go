@@ -115,7 +115,7 @@ func (w *Realtime) run(f RealTimeAction) {
 				t3 := time.Now().UTC().Format(layout)
 
 				client := &http.Client{}
-				req, _ := http.NewRequest("GET", "https://" + w.ProjectCode + ".supabase.co/rest/v1/activity?and=(created_at.gt." + t2 + ",created_at.lt." + t3 + ")", nil)
+				req, _ := http.NewRequest("GET", "https://" + w.ProjectCode + ".supabase.co/rest/v1/activity?and=(created_at.gte." + t2 + ",created_at.lt." + t3 + ")", nil)
 				req.Header.Set("apikey", w.ApiKey)
 				req.Header.Set("Accept-Profile", w.Schema)
 
@@ -142,7 +142,7 @@ func (w *Realtime) run(f RealTimeAction) {
 						return
 					}
 
-					//t = t.Add(time.Second)
+					t = t.Add(time.Second)
 					w.Timestamp = &t
 				}
 			}
