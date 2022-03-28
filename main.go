@@ -134,12 +134,16 @@ func (w *Realtime) run(f RealTimeAction) {
 				result := gjson.Parse(string(body))
 
 				for _, row := range result.Array() {
-					err := f.Run(row)
+					t := row.Get("created_at").Time()
 
+					err = f.Run(row)
 					if err != nil {
 						w.Errors = append(w.Errors, err)
 						return
 					}
+
+					t = t.Add(time.Second)
+					w.Timestamp = &t
 				}
 			}
 		}
