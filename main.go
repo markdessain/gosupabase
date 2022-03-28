@@ -60,14 +60,13 @@ func (w *Realtime) Start(lastTimestamp *time.Time, f RealTimeAction) {
 
 	log.Println("Staring Streaming ...")
 	for {
+		w.run(f)
+
 		if w.Finished {
 			return
 		}
 
-		w.run(f)
-
 		// Reconnect
-		w.Connection.Close()
 		w.Connection = w.connect()
 	}
 }
